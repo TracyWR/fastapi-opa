@@ -178,6 +178,8 @@ own `settings.json` and `advanced_settings.json` has to be provided in the
 production).
 
 ```python
+from starlette.middleware.sessions import SessionMiddleware
+
 from fastapi_opa import OPAConfig
 from fastapi_opa.auth.auth_saml import SAMLAuthentication
 from fastapi_opa.auth.auth_saml import SAMLConfig
@@ -188,6 +190,11 @@ saml_config = SAMLConfig(settings_directory="./tests/test_data/saml")
 saml_auth = SAMLAuthentication(saml_config)
 
 opa_config = OPAConfig(authentication=saml_auth, opa_host=opa_host)
+
+app = FastAPI()
+# Add OPAMiddleware to the fastapi app
+app.add_middleware(OPAMiddleware, config=opa_config)
+app.add_middleware(SessionMiddleware, secret_key="very-secret", max_age=3600)
 ```
 
 The cert has to be uploaded to your identity provider. Using Keycloak as an
