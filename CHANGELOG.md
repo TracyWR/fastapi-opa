@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.3.0] - 2021-07-30
+## [1.3.0] - 2021-08-02
 
 - Add slo and sls methods for saml auth.
 
